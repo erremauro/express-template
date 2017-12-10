@@ -44,7 +44,7 @@ Here's a list of these files:
 The application server can be run with `./bin/www [options]`. To view a
 complete list of options, type:
 
-	$ ./bin/www --help
+    $ ./bin/www --help
 
 	Usage: www [options]
 
@@ -67,7 +67,7 @@ complete list of options, type:
 
 To start the application in development mode, type:
 
-	yarn start [options]
+    yarn start [options]
 
 This will start your server and watch your current working directory for 
 changes. If any change is detected the server will be automatically restarted
@@ -159,7 +159,7 @@ in the order.
 
 To generate a migration type:
 
-	`yarn db-generate <MIGRATION_NAME>`
+    yarn db-generate <MIGRATION_NAME>
 
 That will create an empty but appropriately named migration.
 
@@ -175,22 +175,22 @@ should be unchanged if you do an `up` followed by a `down`.
 Express Template provides a set of scripts to run migrations and reverting them.
 To apply any migration that was not already applied to the database schema, run:
 
-	yarn db-migrate
+    yarn db-migrate
 
 To apply migrations until a specific migration timestamp run:
 
-	yarn db-migrate -t <TIMESTAMP>
+    yarn db-migrate -t <TIMESTAMP>
 
 #### Reverting migrations
 
 A common task is to rollback the last migration. For example, if you made a 
 mistake in it and wish to correct it. 
 
-	yarn db-rollback
+    yarn db-rollback
 
 To rollback migrations until a specific migration timestamp run:
 
-	yarn db-rollback -t <TIMESTAMP>
+    yarn db-rollback -t <TIMESTAMP>
 
 ### The Query object
 
