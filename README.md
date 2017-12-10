@@ -5,6 +5,7 @@ An Express Template with PostgreSQL support.
 ## Table of contents
 
 - [Installation](#installation)
+  -[Cleaning up the examples](#cleaning-up-the-examples)
 - [Running the application](#running-the-application)
   - [Running in development mode](#running-in-development-mode)
 - [Configurations](#configurations)
@@ -25,6 +26,18 @@ To install Express Template type:
 
 	git clone https://github.com/erremauro/express-pg-template <PROJECT_DIR>
 	cd <PROJECT_DIR> && rm -rf .git && yarn install
+
+### Cleaning up the examples
+
+Express Template has some example files to show you how to setup your
+project that you might want to remove after checking them out.
+
+Here's a list of these files:
+
+- `migrations/20171210155841_users.js`, a migration example
+- `app/repos/Users.js`, a database repository example
+- `app/routes/users.js`, an api route example
+- `core/json-response.js`, a json response utility
 
 ## Running the application
 
