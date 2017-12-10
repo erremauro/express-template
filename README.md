@@ -5,7 +5,7 @@ An Express Template with PostgreSQL support.
 ## Table of contents
 
 - [Installation](#installation)
-  -[Cleaning up the examples](#cleaning-up-the-examples)
+  - [Cleaning up the examples](#cleaning-up-the-examples)
 - [Running the application](#running-the-application)
   - [Running in development mode](#running-in-development-mode)
 - [Configurations](#configurations)
