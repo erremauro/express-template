@@ -75,8 +75,8 @@ so you don't have to do it.
 
 ## Configurations
 
-Configurations can be specified in the form of environment variables or in 
-using `.env` file placed in the root of your project directory. You can use 
+Configurations can be specified in the form of environment variables or by 
+using a `.env` file placed in the root of your project directory. You can use 
 environment specific files and local files (i.e. `.env.development`, 
 `.env.test.local`). Local files have precedence over environment specific files.
 
