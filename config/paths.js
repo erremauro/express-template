@@ -12,7 +12,6 @@ const Paths = {
   appBinScript: resolveApp('bin/www'),
   testDir: resolveApp('__tests__'),
   envFile: resolveApp('.env'),
-  migrations: resolveApp('db/migrations'),
   cert: resolveApp('cert.pem'),
   key: resolveApp('key.pem'),
 };

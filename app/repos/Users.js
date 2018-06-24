@@ -1,6 +1,17 @@
-const {camelizeKeys} = require('humps');
+const knex = require('../../core/knex');
 const passwordHash = require('../../core/password-hash');
-const { SQL, exec, createTrasaction } = require('../../core/db/query');
+
+const TABLE = 'users';
+const FIELDS = [
+  'id',
+  'username',
+  'email',
+  'verified',
+  'created_at',
+  'created_by',
+  'updated_at',
+  'updated_by'
+]
 
 /**
  * Users Database Repository.
@@ -23,30 +34,16 @@ module.exports = {
 /**
  * Get all users.
  *
- * @param {number} limit The number of results to return
+ * @param {number} [limit=100]  The number of results to return
  * @param {number} offset The number of results to skip
  * @return {Promise<Array<Object>>} A collection of users
  */
 
-function getAll(limit, offset) {
-  let i = 0;
-  let values = [];
-  let query = 'SELECT id, username, created_at, updated_at FROM users';
-
-  if (limit) {
-    i++;
-    query += ' LIMIT $' + i;
-    values.push(limit);
-  }
-
-  if (offset) {
-    i++;
-    query += ' OFFSET $' + i;;
-    values.push(offset);
-  }
-
-  return exec({text: query, values})
-    .then(({rows}) => rows.map(row => camelizeKeys(row)));
+function getAll(limit = 100, offset = 0) {
+  return knex(TABLE)
+    .select(...FIELDS)
+    .limit(limit)
+    .offset(offset)
 }
 
 /**
@@ -57,12 +54,9 @@ function getAll(limit, offset) {
  */
 
 function getById(id) {
-  return exec(SQL`
-    SELECT id, username, created_at, updated_at
-    FROM   users
-    WHERE  id = ${id}`
-  )
-  .then(({rows}) => camelizeKeys(rows[0]));
+  return knex(TABLE)
+    .where({id})
+    .select(...FIELDS);
 }
 
 /**
@@ -75,13 +69,13 @@ function getById(id) {
 function insert(model) {
   const now = new Date();
   return passwordHash.generate(model.password)
-    .then(hash => SQL`
-      INSERT INTO users (username, password, created_at, updated_at)
-      VALUES(${model.username}, ${hash}, ${now}, ${now})
-      RETURNING id;
-    `)
-    .then(query => exec(query))
-    .then(({rows}) => rows[0].id);
+    .then(hash => {
+      model.password = hash;
+      model.created_at = now;
+      return model;
+    })
+    .then(model => knex(TABLE).insert(model))
+    .then(results => getById(results[0]))
 }
 
 /**
@@ -94,13 +88,13 @@ function insert(model) {
 function update(model) {
   const now = new Date();
   return passwordHash.generate(model.password)
-    .then(hash => SQL`
-      UPDATE users
-      SET    password = ${hash},
-             updated_at = ${now}
-      WHERE  id = ${model.id}
-    `)
-    .then(query => exec(query));
+    .then(hash => {
+      model.password = hash;
+      model.updated_at = now;
+      return model;
+    })
+    .then(model => knex(TABLE).where('id', model.id).update(model))
+    .then(() => getById(model.id));
 }
 
 /**
@@ -111,7 +105,7 @@ function update(model) {
  */
 
 function remove(id) {
-  return exec(SQL`DELETE FROM users WHERE id = ${id}`);
+  return knex(TABLE).where({id}).del();
 }
 
 /**
@@ -122,13 +116,7 @@ function remove(id) {
  */
 
 function exists(username) {
-  return exec(SQL`
-    SELECT EXISTS (
-      SELECT 1
-      FROM   users
-      WHERE  username = ${username}
-    );
-  `).then(({rows}) => rows[0].exists);
+  return knex(TABLE).where({username}).limit(1).then(res => res.length > 0);
 }
 
 /**
@@ -138,8 +126,7 @@ function exists(username) {
  */
 
 function count() {
-  return exec(SQL`SELECT COUNT(*) FROM users`)
-    .then(({rows}) => rows[0].count);
+  return knex(TABLE).count('id');
 }
 
 /**
@@ -151,12 +138,11 @@ function count() {
  */
 
 function verify(id, password) {
-  return exec(SQL`SELECT password FROM users WHERE id = ${id}`)
-    .then(({rows}) => {
-      if (rows[0] === undefined) {
+  return knex(TABLE).where({id}).select('password')
+    .then(data => {
+      if (data[0] === undefined) {
         throw new Error(`A user with id ${id} cannot be found.`);
       }
-
-      return passwordHash.verify(password, rows[0].password);
-    });
+      return passwordHash.verify(password, data[0].password);
+    })
 }

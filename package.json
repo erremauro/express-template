@@ -1,15 +1,11 @@
 {
   "name": "express-template",
-  "version": "1.1.1",
+  "version": "1.2",
   "description": "An Express Template with PostgreSQL support",
   "repository": "https://github.com/erremauro/express-template.git",
   "private": true,
   "scripts": {
-    "start": "node ./scripts/start",
-    "db-generate": "node ./scripts/db generate",
-    "db-migrate": "node ./scripts/db migrate",
-    "db-rollback": "node ./scripts/db rollback",
-    "db-setup": "node ./scripts/db setup"
+    "start": "node ./scripts/start"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -20,7 +16,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.15.5",
-    "humps": "^2.0.1",
+    "knex": "^0.14.6",
     "morgan": "~1.9.0",
     "pg": "^7.4.0",
     "pug": "2.0.0-beta11",
@@ -31,6 +27,7 @@
     "dotenv": "^4.0.0",
     "fs-extra": "^4.0.3",
     "glob": "^7.1.2",
-    "nodemon": "^1.12.5"
+    "nodemon": "^1.12.5",
+    "sqlite3": "^4.0.1"
   }
 }

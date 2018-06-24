@@ -10,7 +10,7 @@ const program = require('commander');
 const createLogger = require('rear-logger');
 const log = createLogger('express:server');
 const ifaces = os.networkInterfaces();
-let logger, server;
+let logger, server, port;
 
 if (require.main === module) {
   program
@@ -33,7 +33,7 @@ if (require.main === module) {
 function Main(opts) {
   logger = createLogger('express:server', { enabled: !opts.quiet });
 
-  const port = normalizePort(opts.port);
+  port = normalizePort(opts.port);
   const app = createApp(opts);
 
   if (!opts.ssl) {
