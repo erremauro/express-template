@@ -18,8 +18,7 @@ An Express Template with PostgreSQL support.
 
 To install Express Template type:
 
-	git clone https://github.com/erremauro/express-pg-template <PROJECT_DIR>
-	cd <PROJECT_DIR> && rm -rf .git && yarn install
+	git clone https://github.com/erremauro/express-template <PROJECT_DIR> && cd <PROJECT_DIR> && rm -rf .git && git init && yarn install
 
 ### Cleaning up the examples
 
