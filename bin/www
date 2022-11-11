@@ -27,7 +27,7 @@ if (require.main === module) {
     .option('-v, --verbose', 'Turn on server logging')
     .parse(process.argv);
 
-  Main(program);
+  Main(program.opts());
 }
 
 function Main(opts) {
