@@ -4,9 +4,9 @@ const favicon = require('serve-favicon');
 const cors = require('cors');
 const logger = require('morgan');
 const compression = require('compression');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const configureRoutes = require('./routes');
+const { session } = require("../core/session-store");
 
 module.exports = createApp;
 
@@ -50,7 +50,7 @@ function createApp(opts) {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(cookieParser());
+  app.use(session);
   app.use(express.static(path.join(__dirname, '../public')));
 
   configureRoutes(app);
