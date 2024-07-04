@@ -50,7 +50,7 @@ function createApp(opts) {
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(session);
+  app.use(session());
   app.use(express.static(path.join(__dirname, '../public')));
 
   configureRoutes(app);

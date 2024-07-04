@@ -17,9 +17,7 @@ const config = {
   store,
 };
 
-const sessionMiddleware = expressSession(config);
-
 module.exports = {
-  session: sessionMiddleware,
+  session: () => expressSession(config),
   sessionStore: store,
 };
